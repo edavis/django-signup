@@ -1,0 +1,36 @@
+=============
+django-signup
+=============
+
+django-signup is a quick, simple user registration app. No bells. No
+whistles. Just enter an email address, click on the activation link in the
+resulting email, then enter a username and password. It works, but it's very
+probably poorly written. Feel free to improve it and make it more robust.
+
+To use django-signup, do the following:-
+
+1. Run 'python setup.py install' and add 'signup' to your project's
+   INSTALLED_APPS setting.
+
+2. Add SIGNUP_EXPIRY_DAYS to your project's settings file.
+
+3. Run 'python manage.py syncdb' in your project root directory.
+
+4. Add the following line to your root URLConf:-
+    (r'^signup/', include('signup.urls')),
+
+5. Create a folder called 'signup' in your templates directory, and create
+   the following templates:-
+
+    'signup_form.html' - form for just an email address
+    'check_mail.html' - page asking for user to check their email
+    'activate_form.html' - form asking for username and password (once)
+    'key_invalid.html' - page stating activation key is invalid
+    'signup_successful.html' - page stating signup process successful
+    'activation_email.txt' - The email body containing the activation key
+    'activation_email_subject.txt' - The email subject line
+
+6. That's it!
+
+You only enter a password once, as I hate having to enter it twice. If you
+mess it up, you'll have to do a password reset.
