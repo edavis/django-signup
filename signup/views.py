@@ -42,7 +42,7 @@ def activate(request, signup_key):
     except:
         return HttpResponseRedirect(reverse("signup_invalid_key"))
     # Check if profile has expired
-    if profile.expiry_date > datetime.datetime.now():
+    if not profile.has_key_expired:
         if request.method == 'POST':
             form = ActivateForm(request.POST)
             if form.is_valid():
