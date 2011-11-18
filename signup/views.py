@@ -8,6 +8,7 @@ from django.shortcuts import render
 from django.template.loader import render_to_string
 from django.core.mail import send_mail
 from django.contrib.auth.models import User
+from django.core.urlresolvers import reverse
 from models import SignUpProfile
 from forms import SignUpForm, ActivateForm
 import datetime
@@ -28,7 +29,7 @@ def signup(request):
             instance = form.save()
             # Generate and send activation email
             _send_activation_email(instance)
-            return HttpResponseRedirect('/signup/checkyouremail')
+            return HttpResponseRedirect(reverse("signup_check_your_email"))
     else:
         form = SignUpForm()
     return render(request, 'signup/signup_form.html', {'form': form})
