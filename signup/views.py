@@ -4,7 +4,7 @@ Views for django-signup.
 
 from django.conf import settings
 from django.http import HttpResponseRedirect
-from django.shortcuts import render_to_response
+from django.shortcuts import render
 from django.template.loader import render_to_string
 from django.core.mail import send_mail
 from django.contrib.auth.models import User
@@ -31,7 +31,7 @@ def signup(request):
             return HttpResponseRedirect('/signup/checkyouremail')
     else:
         form = SignUpForm()
-    return render_to_response('signup/signup_form.html', {'form': form})
+    return render(request, 'signup/signup_form.html', {'form': form})
 
 def activate(request, signup_key):
     # Try and get a sign up profile that matches activation key
@@ -59,4 +59,4 @@ def activate(request, signup_key):
         # Delete expired sign up profile and show invalid key page
         profile.delete()
         return HttpResponseRedirect('/signup/key_invalid')
-    return render_to_response('signup/activate_form.html', {'form': form})
+    return render(request, 'signup/activate_form.html', {'form': form})
