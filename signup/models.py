@@ -8,21 +8,27 @@ import datetime
 import random
 import hashlib
 
+def generate_expiry_date():
+    """
+    Generate an expiry date SIGNUP_EXPIRY_DAYS days from now.
+    """
+    return datetime.datetime.now() + datetime.timedelta(settings.SIGNUP_EXPIRY_DAYS)
+
+def generate_signup_key():
+    """
+    Generate a SHA1 hashed signup key.
+    """
+    r = str(random.random())
+    return hashlib.sha1(r).hexdigest()
+
 class SignUpProfile(models.Model):
     email = models.EmailField()
-    signup_key = models.CharField(max_length=40)
-    expiry_date = models.DateTimeField()
-
-    class Meta:
-        pass
+    signup_key = models.CharField(max_length=40, default=generate_signup_key)
+    expiry_date = models.DateTimeField(default=generate_expiry_date)
 
     def __unicode__(self):
-        return unicode(self.email)
+        return self.email
 
-    def save(self):
-        # Generate activation key
-        self.signup_key = hashlib.sha1(str(random.random())).hexdigest()
-        # Set expiry date
-        self.expiry_date = datetime.datetime.now() + \
-                            datetime.timedelta(settings.SIGNUP_EXPIRY_DAYS)
-        super(SignUpProfile, self).save()
+    @property
+    def has_key_expired(self):
+        return datetime.datetime.now() > self.expiry_date
