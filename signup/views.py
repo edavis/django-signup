@@ -53,7 +53,7 @@ def activate(request, signup_key):
                 user.save()
                 # Delete the sign up profile
                 profile.delete()
-                return HttpResponseRedirect('/signup/success')
+                return HttpResponseRedirect(reverse("signup_success"))
         else:
             form = ActivateForm()
     else:

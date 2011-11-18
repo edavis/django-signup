@@ -14,6 +14,6 @@ urlpatterns = patterns('',
     url(r'^activate/(?P<signup_key>[-\w]+)/$', views.activate, name="signup_activate"),
     url(r'^key_invalid/$',
             direct_to_template, {'template': 'signup/key_invalid.html'}, name="signup_invalid_key"),
-    (r'^success/$',
-            direct_to_template, {'template': 'signup/signup_successful.html'}),
+    url(r'^success/$',
+            direct_to_template, {'template': 'signup/signup_successful.html'}, name="signup_success"),
 )
