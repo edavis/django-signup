@@ -40,7 +40,7 @@ def activate(request, signup_key):
     try:
         profile = SignUpProfile.objects.get(signup_key=signup_key)
     except:
-        return HttpResponseRedirect('/signup/key_invalid')
+        return HttpResponseRedirect(reverse("signup_invalid_key"))
     # Check if profile has expired
     if profile.expiry_date > datetime.datetime.now():
         if request.method == 'POST':
@@ -59,5 +59,5 @@ def activate(request, signup_key):
     else:
         # Delete expired sign up profile and show invalid key page
         profile.delete()
-        return HttpResponseRedirect('/signup/key_invalid')
+        return HttpResponseRedirect(reverse("signup_invalid_key"))
     return render(request, 'signup/activate_form.html', {'form': form})
