@@ -45,7 +45,7 @@ def activate(request, signup_key):
     if not profile.has_key_expired:
         if request.method == 'POST':
             form = ActivateForm(request.POST)
-            if form.is_valid():
+            if form.is_valid(): # pragma: no partial
                 # Create a new User instance
                 user = User(username=form.cleaned_data['username'],
                                 email=profile.email)
