@@ -8,11 +8,13 @@ import datetime
 import random
 import hashlib
 
+SIGNUP_EXPIRY_DAYS = getattr(settings, 'SIGNUP_EXPIRY_DAYS', 7)
+
 def generate_expiry_date():
     """
     Generate an expiry date SIGNUP_EXPIRY_DAYS days from now.
     """
-    return datetime.datetime.now() + datetime.timedelta(settings.SIGNUP_EXPIRY_DAYS)
+    return datetime.datetime.now() + datetime.timedelta(SIGNUP_EXPIRY_DAYS)
 
 def generate_signup_key():
     """
